@@ -17,16 +17,16 @@ const getMentees = /* GraphQL */ `
 `;
 
 const createMentor = /* GraphQL */ `
-  mutation createMentor($name: String!, $email: String!, $password: String!) {
-    createUser(data: { name: $name, type: Mentor, email: $email, password: $password }) {
+  mutation createMentor($name: String!, $email: String!) {
+    createUser(data: { name: $name, type: Mentor, email: $email }) {
       name
     }
   }
 `;
 
 const createMentee = /* GraphQL */ `
-  mutation createMentee($name: String!, $email: String!, $password: String!) {
-    createUser(data: { name: $name, type: Mentee, email: $email, password: $password }) {
+  mutation createMentee($name: String!, $email: String!) {
+    createUser(data: { name: $name, type: Mentee, email: $email }) {
       name
     }
   }
@@ -37,17 +37,14 @@ describe('Mentors', () => {
     await client.request(createMentor, {
       name: 'Mentor One',
       email: 'mentor-one@coding-coach.io',
-      password: 'Secret!1Pass',
     });
     await client.request(createMentor, {
       name: 'Mentor Two',
       email: 'mentor-two@coding-coach.io',
-      password: 'Secret!2Pass',
     });
     await client.request(createMentee, {
-      name: 'Mentee One',
+      name: 'Mentee Three',
       email: 'mentor-three@coding-coach.io',
-      password: 'Secret!3Pass',
     });
     const { mentors } = await client.request(getMentors);
     const { mentees } = await client.request(getMentees);
