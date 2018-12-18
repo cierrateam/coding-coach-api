@@ -17,16 +17,16 @@ const getMentees = /* GraphQL */ `
 `;
 
 const createMentor = /* GraphQL */ `
-  mutation createMentor($name: String!) {
-    createUser(data: { name: $name, type: Mentor }) {
+  mutation createMentor($name: String!, $email: String!, $password: String!) {
+    createUser(data: { name: $name, type: Mentor, email: $email, password: $password }) {
       name
     }
   }
 `;
 
 const createMentee = /* GraphQL */ `
-  mutation createMentee($name: String!) {
-    createUser(data: { name: $name, type: Mentee }) {
+  mutation createMentee($name: String!, $email: String!, $password: String!) {
+    createUser(data: { name: $name, type: Mentee, email: $email, password: $password }) {
       name
     }
   }
@@ -34,9 +34,21 @@ const createMentee = /* GraphQL */ `
 
 describe('Mentors', () => {
   test('Create mentor and mentee and retrieve them', async () => {
-    await client.request(createMentor, { name: 'Mentor One' });
-    await client.request(createMentor, { name: 'Mentor Two' });
-    await client.request(createMentee, { name: 'Mentee One' });
+    await client.request(createMentor, {
+      name: 'Mentor One',
+      email: 'mentor-one@coding-coach.io',
+      password: 'Secret!1Pass',
+    });
+    await client.request(createMentor, {
+      name: 'Mentor Two',
+      email: 'mentor-two@coding-coach.io',
+      password: 'Secret!2Pass',
+    });
+    await client.request(createMentee, {
+      name: 'Mentee One',
+      email: 'mentor-three@coding-coach.io',
+      password: 'Secret!3Pass',
+    });
     const { mentors } = await client.request(getMentors);
     const { mentees } = await client.request(getMentees);
     expect(mentors).toMatchSnapshot('getMentors');
