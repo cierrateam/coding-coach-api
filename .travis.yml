@@ -11,6 +11,7 @@ before_script:
   - yarn lint
   - yarn build
   - yarn start --silent &
+  - sleep 3
 script:
   - yarn test
 notifications:
