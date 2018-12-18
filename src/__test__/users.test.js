@@ -18,16 +18,13 @@ const userSignUp = /* GraphQL */ `
 `;
 
 describe('Users', () => {
-  test('Users signup can be submitted to the api', async () => {
+  test('Check user can be created with sign up', async () => {
     const user = await client.request(userSignUp, {
       name: 'John Doe',
       email: 'john-doe@codingcoach.io',
       password: 'Secret!1Pass',
     });
-
-    const userFetched = await client.request(getUser, {
-      email: 'john-doe@codingcoach.io',
-    });
-    expect(userFetched.id).toEqual(user.id);
+    const fetchedUser = await client.request(getUser, { email: 'john-doe@codingcoach.io' });
+    expect(user.id).toEqual(fetchedUser.id);
   });
 });
