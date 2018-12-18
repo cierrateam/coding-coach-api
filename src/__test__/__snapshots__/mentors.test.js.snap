@@ -1,14 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Mentors Create mentor and mentee and retrieve them: getMentees 1`] = `
-Array [
-  Object {
-    "name": "Mentee One",
-    "type": "Mentee",
-  },
-]
-`;
-
 exports[`Mentors Create mentor and mentee and retrieve them: getMentors 1`] = `
 Array [
   Object {
@@ -18,6 +9,10 @@ Array [
   Object {
     "name": "Mentor Two",
     "type": "Mentor",
+  },
+  Object {
+    "name": "John Doe",
+    "type": "Both",
   },
 ]
 `;

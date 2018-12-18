@@ -18,6 +18,25 @@ export default {
         password,
       });
     },
+    async userSignUp(
+      root,
+      {
+        data: {
+          name, type, email, password,
+        },
+      },
+    ) {
+      const user = User.create({
+        firstName: name.split(' ')[0],
+        lastName: name.split(' ')[1],
+        type,
+        email,
+        password,
+      });
+      // Trigger the welcome mail and other things for post-registration here
+
+      return user;
+    },
   },
   User: {
     name: ({ firstName, lastName }) => `${firstName} ${lastName}`,
@@ -28,7 +47,7 @@ export default {
     },
     // for searching the user while login
     userByEmail: async (email) => {
-      return User.findOne(email);
+      return User.findOne({ email });
     },
   },
 };

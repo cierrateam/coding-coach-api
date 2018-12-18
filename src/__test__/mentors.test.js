@@ -52,8 +52,8 @@ describe('Mentors', () => {
     const { mentors } = await client.request(getMentors);
     const { mentees } = await client.request(getMentees);
     expect(mentors).toMatchSnapshot('getMentors');
-    expect(mentors).toHaveLength(2);
+    expect(mentors).toHaveLength(3);
     expect(mentees).toMatchSnapshot('getMentees');
-    expect(mentees).toHaveLength(1);
+    expect(mentees).toHaveLength(2);
   });
 });
