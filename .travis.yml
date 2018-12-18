@@ -9,7 +9,7 @@ install: npm install
 script:
   - yarn lint
   - yarn build
-  - yarn start
+  - yarn start &
   - yarn test
 notifications:
   email: true
