@@ -43,8 +43,8 @@ describe('Mentors', () => {
       email: 'mentor-two@coding-coach.io',
     });
     await client.request(createMentee, {
-      name: 'Mentee Three',
-      email: 'mentor-three@coding-coach.io',
+      name: 'Mentee One',
+      email: 'mentee-one@coding-coach.io',
     });
     const { mentors } = await client.request(getMentors);
     const { mentees } = await client.request(getMentees);
