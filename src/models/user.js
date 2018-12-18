@@ -1,18 +1,20 @@
 import mongoose from 'mongoose';
-import { bcrypt } from 'bcrypt-nodejs';
+import bcrypt from 'bcrypt-nodejs';
 import validate from 'mongoose-validator';
 import { isValidPassword } from 'mongoose-custom-validators';
 
 const saltIndex = 10;
 
-const emailValidator = [
+const nameValidator = [
   validate({
     type: String,
     validator: 'isLength',
     arguments: [4, 32],
     message: 'Name should be between 4 and 32 characters',
   }),
+];
 
+const emailValidator = [
   validate({
     validator: 'isEmail',
     message: 'Email address invalid',
@@ -37,6 +39,13 @@ const userSchema = new mongoose.Schema({
   firstName: String,
 
   lastName: String,
+
+  name: {
+    type: String,
+    require: false,
+    allowNull: false,
+    validate: nameValidator,
+  },
 
   email: {
     type: String,
@@ -71,6 +80,22 @@ const userSchema = new mongoose.Schema({
     },
   },
   type: String,
+});
+
+userSchema.pre('save', function (next) {
+  const user = this;
+  // ignore from here if password isnt modified
+  if (!user.isModified('password')) return next();
+  // generate a salt with the saltIntex
+  bcrypt.genSalt(saltIndex, (err, salt) => {
+    if (err) return next(err);
+    // hash the password and store it to the model
+    const hash = bcrypt.hashSync(user.password, salt);
+    user.password = hash;
+    next();
+    return true; // ESLINT??
+  });
+  return true; // ESLINT??
 });
 
 userSchema.methods.generateHash = (password) => {
